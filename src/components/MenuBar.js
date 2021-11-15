@@ -33,6 +33,11 @@ const MenuBar = () => {
                 Ingredients
               </Link>
             </li>
+            <li className="nav-item">
+              <Link to="/logout" className="nav-link">
+                Logout
+              </Link>
+            </li>
           </ul>
           <form className="d-flex">
             <input
