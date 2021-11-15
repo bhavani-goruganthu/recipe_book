@@ -1,0 +1,14 @@
+@import '../css/index.css';
+
+.navbar-bg {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.nav-link {
+    color: green;
+}
+
+.recipe-logo {
+    width: 50px;
+}

@@ -1,11 +1,18 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import '../assets/css/menubar.css';
+import Logo from '../assets/img/Logo.jpg';
 
 const MenuBar = () => {
   return (
-    <nav className="navbar navbar-expand-sm navbar-dark bg-dark">
+    <nav className="navbar navbar-expand-sm navbar-bg">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand">
+        <Link to="/" className="navbar-brand primary-color">
+          <img
+            src={Logo}
+            alt="Avatar Logo"
+            className="rounded-pill recipe-logo border border-4 border-success"
+          />{' '}
           Recipe Book
         </Link>
         <button
@@ -39,7 +46,7 @@ const MenuBar = () => {
               </Link>
             </li>
           </ul>
-          <form className="d-flex">
+          {/* <form className="d-flex">
             <input
               className="form-control me-2"
               type="text"
@@ -48,7 +55,7 @@ const MenuBar = () => {
             <button className="btn btn-primary" type="button">
               Search
             </button>
-          </form>
+          </form> */}
         </div>
       </div>
     </nav>
