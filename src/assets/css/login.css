@@ -10,7 +10,7 @@
 .login-container {
     border: 3.5px solid var(--secondary-color);
     border-radius: 14px;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
 }
 
 .login_input-field {
@@ -52,4 +52,14 @@
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     cursor: pointer;
 }
+
+.login-label {
+    display: inline-block;
+    padding: 5px 5px 0px 0px;
+    margin-top: 10px;
+    font-size: 100%;
+  }
   
+.first-label {
+    margin-top: 0px !important;
+  }

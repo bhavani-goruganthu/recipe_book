@@ -15,6 +15,7 @@ const Login = () => {
             className="mx-auto login-container"
             method="post"
             encType="application/x-www-form-urlencoded"
+            // onSubmit={onSubmitOwnerLogin}
           >
             <div className="m-3">
               <input id="redirect-input" type="hidden" name="redirect" />
@@ -50,7 +51,7 @@ const Login = () => {
               <br />
               <a href="/">Forgot Password?</a>
               <br />
-              <Link to="/OwnerSignup">Don't have an account?</Link>
+              <Link to="/signup">Don't have an account?</Link>
               <br />
               <br />
               <button
