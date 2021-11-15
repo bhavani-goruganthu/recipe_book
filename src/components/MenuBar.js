@@ -7,7 +7,7 @@ const MenuBar = () => {
   return (
     <nav className="navbar navbar-expand-sm navbar-bg">
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand primary-color">
+        <Link to="/" className="navbar-brand text-white">
           <img
             src={Logo}
             alt="Avatar Logo"
