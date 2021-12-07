@@ -1,8 +1,27 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../assets/css/login.css';
+import axios from 'axios';
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [userEmail, setUserEmail] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+
+  const onSubmitUserLogin = (event) => {
+    event.preventDefault();
+    axios
+      .get('http://localhost:4000/api/user/login', {
+        params: {
+          userEmail: userEmail,
+        },
+      })
+      .then((response) => {
+        if (response.data[0].login_password == userPassword) {
+          navigate('/home');
+        } else alert('Login Failed..!! Try Again');
+      });
+  };
   return (
     <div className="container-fluid row">
       <p className="h3 primary-color mx-auto text-center mt-3 mb-4">
@@ -15,7 +34,7 @@ const Login = () => {
             className="mx-auto login-container"
             method="post"
             encType="application/x-www-form-urlencoded"
-            // onSubmit={onSubmitOwnerLogin}
+            onSubmit={onSubmitUserLogin}
           >
             <div className="m-3">
               <input id="redirect-input" type="hidden" name="redirect" />
@@ -31,6 +50,8 @@ const Login = () => {
                 id="displayNameInput"
                 name="displayName"
                 placeholder="e.g. john.doe@gmail.com"
+                value={userEmail}
+                onChange={(e) => setUserEmail(e.target.value)}
                 required
               />
               <br />
@@ -46,6 +67,8 @@ const Login = () => {
                 name="password"
                 placeholder="must have at least 6 characters"
                 required
+                value={userPassword}
+                onChange={(e) => setUserPassword(e.target.value)}
               />
               <br />
               <br />
