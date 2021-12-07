@@ -17,7 +17,7 @@ const Login = () => {
         },
       })
       .then((response) => {
-        if (response.data[0].login_password == userPassword) {
+        if (response.data[0].login_password === userPassword) {
           navigate('/home');
         } else alert('Login Failed..!! Try Again');
       });

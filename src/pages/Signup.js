@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../assets/css/login.css';
+import axios from 'axios';
 
 const Signup = () => {
+  const navigate = useNavigate();
   const [userName, setUserName] = useState('');
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -22,6 +24,19 @@ const Signup = () => {
   const onSubmitUserSignup = (event) => {
     event.preventDefault();
     comparePasswords();
+    if (!showPasswordsMismatchAlert) {
+      axios
+        .post('http://localhost:4000/api/user/signup', {
+          userName: userName,
+          userEmail: userEmail,
+          userDailyCalorieLimit: userDailyCalorieLimit,
+          userPassword: userPassword,
+        })
+        .then((response) => {
+          alert('Thank you for Registering!!');
+          navigate('/login');
+        });
+    }
   };
 
   return (
