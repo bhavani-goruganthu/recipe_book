@@ -1,40 +1,42 @@
 import React, { useState } from 'react';
 import MenuBar from '../components/MenuBar';
 // import { Link } from 'react-router-dom';
-import '../assets/css/categories.css';
+import '../assets/css/ingredients.css';
 import axios from 'axios';
 
-const Categories = () => {
-  const [categories, setCategories] = useState([]);
+const Ingredients = () => {
+  const [ingredients, setIngredients] = useState([]);
   React.useEffect(() => {
     axios
-      .get('http://localhost:4000/api/category/all-categories')
+      .get('http://localhost:4000/api/ingredient/all-ingredients')
       .then((response) => {
         console.log(response.data);
-        setCategories(response.data);
+        setIngredients(response.data);
       });
   }, []);
 
   return (
     <>
       <MenuBar />
-      <div className="container w-25 mt-3">
-        <h2>Categories</h2>
-        <p>All available categories are listed below:</p>
+      <div className="container w-50 mt-3">
+        <h2>Ingredients</h2>
+        <p>All available Ingredients are listed below:</p>
         <table className="table table-bordered text-center">
           <thead>
             <tr>
               <th>Sno.</th>
               <th>Name</th>
-              <th>Cuisine</th>
+              <th>Calorie per Unit</th>
+              <th>Measured in</th>
             </tr>
           </thead>
           <tbody>
-            {categories.map((item, i) => (
+            {ingredients.map((item, i) => (
               <tr>
-                <td className="w-25">{i + 1}</td>
+                <td>{i + 1}</td>
                 <td>{item.name}</td>
-                <td>{item.cuisine}</td>
+                <td>{item.calorie_unit}</td>
+                <td>{item.unit_denomination}</td>
               </tr>
             ))}
           </tbody>
@@ -44,4 +46,4 @@ const Categories = () => {
   );
 };
 
-export default Categories;
+export default Ingredients;
