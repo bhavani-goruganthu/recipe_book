@@ -1,0 +1,7 @@
+@import '../css/index.css';
+
+.recipe-card{
+    width: 350px;
+    border: 3.5px solid var(--secondary-color);
+    padding: 8px;
+}

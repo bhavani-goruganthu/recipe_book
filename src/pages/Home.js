@@ -5,7 +5,6 @@ import Recipes from './Recipes';
 const axios = require('axios');
 
 const Home = () => {
-  // const [dom1, setDom1] = useState('');
   // React.useEffect(() => {});
 
   return (

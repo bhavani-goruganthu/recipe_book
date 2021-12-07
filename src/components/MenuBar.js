@@ -41,7 +41,7 @@ const MenuBar = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/logout" className="nav-link">
+              <Link to="/login" className="nav-link">
                 Logout
               </Link>
             </li>
