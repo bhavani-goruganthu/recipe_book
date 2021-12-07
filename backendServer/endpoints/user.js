@@ -29,7 +29,6 @@ router.post('/signup', (req, res) => {
     `")`;
 
   console.log(query);
-  // res.send('done');
   // Send user query to db
   database.query(query, (err, result) => {
     console.log('Uploaded user info to db');

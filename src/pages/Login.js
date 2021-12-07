@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import '../assets/css/login.css';
 import axios from 'axios';
+import { setAppUser } from '../redux/actions/appUserActions';
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
 
@@ -19,6 +22,7 @@ const Login = () => {
       .then((response) => {
         if (response.data[0].login_password === userPassword) {
           navigate('/home');
+          dispatch(setAppUser(response.data[0].uid));
         } else alert('Login Failed..!! Try Again');
       });
   };

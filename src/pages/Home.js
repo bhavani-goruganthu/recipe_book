@@ -6,11 +6,7 @@ const axios = require('axios');
 
 const Home = () => {
   // const [dom1, setDom1] = useState('');
-  React.useEffect(() => {
-    axios.get('http://localhost:4000/api/user/login').then((response) => {
-      console.log(response);
-    });
-  });
+  // React.useEffect(() => {});
 
   return (
     <div>
