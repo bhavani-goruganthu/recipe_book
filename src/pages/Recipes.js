@@ -9,6 +9,7 @@ const Recipes = () => {
   const appUser = useSelector((state) => state.appUserReducer.appUser);
   const [userRecipes, setUserRecipes] = useState([]);
   const [recipeName, setRecipeName] = useState('');
+  const [clickedInstructionsID, setClickedInstructionsID] = useState(0);
   const [recipeDescription, setRecipeDescription] = useState('');
   const [recipeInstructions, setRecipeInstructions] = useState('');
   const [recipeCalories, setRecipeCalories] = useState(0);
@@ -23,7 +24,6 @@ const Recipes = () => {
   };
 
   const onSubmitAddRecipe = (event) => {
-    console.log('inside');
     event.preventDefault();
     axios
       .post('http://localhost:4000/api/recipe/add-recipe', {
@@ -35,9 +35,10 @@ const Recipes = () => {
         appUser: appUser,
       })
       .then((response) => {
-        // alert('New Recipe Added!!');
-        // navigate('/recipes');
+        alert('New Recipe Added!!');
+        navigate('/recipes');
         console.log(response.data);
+        onClickAddModal();
       });
   };
 
@@ -71,46 +72,50 @@ const Recipes = () => {
         </button>
       </div>
       <br />
-      <div className="d-flex justify-content-around  flex-wrap m-4">
+      <div className="d-flex justify-content-around  flex-wrap mx-4">
         {userRecipes.map((item, i) => (
-          <React.Fragment key={i}>
-            {/* // <Link to={`/recipe1`}> */}
-            <div className="card recipe-card">
-              <img
-                className="rounded"
-                src={item.image_url}
-                alt="recipe_img"
-                width="328px"
-                height="250px"
-              />
-              <div className="">
-                <h5 className="text-center ml-2 mt-1 primary-color">
-                  <strong>{item.name}</strong>
-                </h5>
-              </div>
-              <p className="text-dark h6">
-                <b className="primary-color">Description: </b>
-                <i>{item.description}</i>
-              </p>
-              <span className="text-muted ml-2 mt-auto">
-                Calories: {item.calories}
-              </span>
-              <div className="mx-auto mt-auto">
-                <button
-                  type="button"
-                  className="btn btn-info mt-auto"
-                  data-bs-toggle="modal"
-                  data-bs-target="#myModal"
-                >
-                  Instructions
-                </button>
-              </div>
+          <div className="card recipe-card mt-4" key={i}>
+            <img
+              className="rounded"
+              src={item.image_url}
+              alt="recipe_img"
+              width="328px"
+              height="250px"
+            />
+            <div className="">
+              <h5 className="text-center ml-2 mt-1 primary-color">
+                <strong>{item.name}</strong>
+              </h5>
             </div>
-
-            {/* <!-- The Instructions Modal --> */}
-            <div className="modal fade" id="myModal">
-              <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-                <div className="modal-content">
+            <p className="text-dark h6">
+              <b className="primary-color">Description: </b>
+              <i>{item.description}</i>
+            </p>
+            <span className="text-muted ml-2 mt-auto">
+              Calories: {item.calories}
+            </span>
+            <div className="mx-auto mt-auto">
+              <button
+                type="button"
+                className="btn btn-info mt-auto"
+                data-bs-toggle="modal"
+                data-bs-target="#myModal"
+                onClick={(e) => {
+                  setClickedInstructionsID(item.rid);
+                }}
+              >
+                Instructions
+              </button>
+            </div>
+          </div>
+        ))}
+        {/* <!-- The Instructions Modal --> */}
+        <div className="modal fade" id="myModal">
+          <div className="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+            {userRecipes
+              .filter((item1) => item1.rid === clickedInstructionsID)
+              .map((item, i) => (
+                <div className="modal-content" key={i}>
                   {/* <!-- Modal Header --> */}
                   <div className="modal-header">
                     <h4 className="modal-title">{item.name}</h4>
@@ -120,6 +125,7 @@ const Recipes = () => {
                       data-bs-dismiss="modal"
                     ></button>
                   </div>
+
                   {/* <!-- Modal body --> */}
                   <div className="modal-body">
                     <b>Instructions:</b>
@@ -137,10 +143,9 @@ const Recipes = () => {
                     </button>
                   </div>
                 </div>
-              </div>
-            </div>
-          </React.Fragment>
-        ))}
+              ))}
+          </div>
+        </div>
       </div>
 
       {/* <!-- The Add Recipe Modal --> */}
@@ -162,7 +167,6 @@ const Recipes = () => {
                 className="mx-auto login-container"
                 method="post"
                 encType="application/x-www-form-urlencoded"
-                onSubmit={onSubmitAddRecipe}
               >
                 <div className="mx-3 my-2">
                   <input id="redirect-input" type="hidden" name="redirect" />
@@ -242,30 +246,14 @@ const Recipes = () => {
                     type="submit"
                     className="login_button d-flex justify-content-center mt-3"
                     value="submit"
-                    // data-bs-dismiss="modal"
+                    data-bs-dismiss="modal"
+                    onClick={onSubmitAddRecipe}
                   >
                     Submit
                   </button>
                 </div>
               </form>
             </div>
-
-            {/* <!-- Modal footer -->
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn primary-color secondary-color-bg"
-              >
-                Submit
-              </button>
-              <button
-                type="button"
-                className="btn btn-danger"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-            </div> */}
           </div>
         </div>
       </div>
