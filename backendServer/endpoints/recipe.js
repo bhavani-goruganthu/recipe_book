@@ -20,22 +20,37 @@ router.get('/user-recipes', (req, res) => {
 router.post('/add-recipe', (req, res) => {
   console.log('Called user add recipe endpoint');
   // Generate SQL query with user info
-  let query =
-    `INSERT INTO user (name, daily_calorie_limit, login_username, login_password) VALUES ("` +
-    req.body.userName +
+  let query1 =
+    `INSERT INTO recipe (name, description, instructions, calories, image_url) VALUES ("` +
+    req.body.recipeName +
     `","` +
-    req.body.userDailyCalorieLimit +
+    req.body.recipeDescription +
     `","` +
-    req.body.userEmail +
+    req.body.recipeInstructions +
     `","` +
-    req.body.userPassword +
+    req.body.recipeCalories +
+    `","` +
+    req.body.recipeImageURL +
     `")`;
-
-  console.log(query);
+  console.log(query1);
   // Send user query to db
-  database.query(query, (err, result) => {
-    console.log('Uploaded user info to db');
-    res.send(result);
+  database.query(query1, (err, result) => {
+    console.log('Uploaded recipe info to db');
+    console.log(result.insertId);
+    newRecipeID = result.insertId;
+
+    let query2 =
+      `INSERT INTO adds_recipe (uid, rid) VALUES ("` +
+      req.body.appUser +
+      `","` +
+      newRecipeID +
+      `")`;
+    console.log(query2);
+    database.query(query2, (err, result1) => {
+      console.log('Uploaded user recipe info to db - adds_recipe table');
+      res.send(result1);
+    });
+    // res.send(result);
   });
 });
 
