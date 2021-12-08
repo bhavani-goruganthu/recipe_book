@@ -82,6 +82,9 @@ const Recipes = () => {
               width="328px"
               height="250px"
             />
+            <button className="btn btn-primary card-btn">
+              <i className="fa fa-edit">Edit</i>
+            </button>
             <div className="">
               <h5 className="text-center ml-2 mt-1 primary-color">
                 <strong>{item.name}</strong>

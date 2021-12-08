@@ -4,4 +4,21 @@
     width: 350px;
     border: 3.5px solid var(--secondary-color);
     padding: 8px;
+    position: relative;
 }
+
+.card-btn {
+  position: absolute;
+  top: 7%;
+  left: 87%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  font-size: 16px;
+  padding: 3px 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
