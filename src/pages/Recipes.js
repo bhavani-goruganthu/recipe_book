@@ -10,6 +10,11 @@ const Recipes = () => {
   const [userRecipes, setUserRecipes] = useState([]);
   const [recipeName, setRecipeName] = useState('');
   const [clickedInstructionsID, setClickedInstructionsID] = useState(0);
+  const [editRecipeID, setEditRecipeID] = useState(0);
+  const [editRecipeName, setEditRecipeName] = useState('');
+  const [editRecipeDescription, setEditRecipeDescription] = useState('');
+  const [editRecipeInstructions, setEditRecipeInstructions] = useState('');
+  const [editRecipeCalories, setEditRecipeCalories] = useState(0);
   const [recipeDescription, setRecipeDescription] = useState('');
   const [recipeInstructions, setRecipeInstructions] = useState('');
   const [recipeCalories, setRecipeCalories] = useState(0);
@@ -42,6 +47,23 @@ const Recipes = () => {
       });
   };
 
+  const onSubmitEditRecipe = (event) => {
+    event.preventDefault();
+    axios
+      .post('http://localhost:4000/api/recipe/edit-recipe', null, {
+        params: {
+          editRecipeName: editRecipeName,
+          editRecipeDescription: editRecipeDescription,
+          editRecipeInstructions: editRecipeInstructions,
+          editRecipeCalories: editRecipeCalories,
+          editRecipeID: editRecipeID,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  };
+
   React.useEffect(() => {
     console.log(appUser);
     if (appUser !== 0) {
@@ -52,7 +74,7 @@ const Recipes = () => {
           },
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setUserRecipes(response.data);
         });
     }
@@ -66,7 +88,6 @@ const Recipes = () => {
           className="btn primary-color secondary-color-bg"
           data-bs-toggle="modal"
           data-bs-target="#myAddModal"
-          // onClick={onClickAddModal}
         >
           Add New Recipe
         </button>
@@ -82,7 +103,18 @@ const Recipes = () => {
               width="328px"
               height="250px"
             />
-            <button className="btn btn-primary card-btn">
+            <button
+              className="btn btn-primary card-btn"
+              data-bs-toggle="modal"
+              data-bs-target="#myEditModal"
+              onClick={(e) => {
+                setEditRecipeName(item.name);
+                setEditRecipeDescription(item.description);
+                setEditRecipeInstructions(item.instructions);
+                setEditRecipeCalories(item.calories);
+                setEditRecipeID(item.rid);
+              }}
+            >
               <i className="fa fa-edit">Edit</i>
             </button>
             <div className="">
@@ -251,6 +283,103 @@ const Recipes = () => {
                     value="submit"
                     data-bs-dismiss="modal"
                     onClick={onSubmitAddRecipe}
+                  >
+                    Submit
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* <!-- The Edit Recipe Modal --> */}
+      <div className="modal fade" id="myEditModal">
+        <div className="modal-dialog modal-l modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content">
+            {/* <!-- Modal Header --> */}
+            <div className="modal-header">
+              <h4 className="modal-title font-weight-bolder">Edit Recipe</h4>
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="modal"
+              ></button>
+            </div>
+            {/* <!-- Modal body --> */}
+            <div className="modal-body">
+              <form
+                className="mx-auto login-container"
+                method="post"
+                encType="application/x-www-form-urlencoded"
+              >
+                <div className="mx-3 my-2">
+                  <input id="redirect-input" type="hidden" name="redirect" />
+                  <h6 className="text-info text-center">
+                    All fields are Mandatory
+                  </h6>
+                  <label
+                    htmlFor="RecipeName"
+                    className="login-label  first-label"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="name"
+                    className="login_input-field"
+                    type="text"
+                    placeholder="e.g. Vegan Burger"
+                    required
+                    name="Name"
+                    value={editRecipeName}
+                    onChange={(e) => setEditRecipeName(e.target.value)}
+                  />
+                  <label htmlFor="Description" className="login-label">
+                    Description
+                  </label>
+                  <textarea
+                    className="form-control login_input-field"
+                    rows="3"
+                    placeholder="e.g. Tasty & Healthy"
+                    id="recipeDescription"
+                    name="Description"
+                    required
+                    value={editRecipeDescription}
+                    onChange={(e) => setEditRecipeDescription(e.target.value)}
+                  />
+                  <label htmlFor="recipeInstructions" className="login-label">
+                    Instructions
+                  </label>
+                  <textarea
+                    className="form-control login_input-field"
+                    rows="5"
+                    id="recipeInstructions"
+                    name="Instructions"
+                    required
+                    value={editRecipeInstructions}
+                    onChange={(e) => setEditRecipeInstructions(e.target.value)}
+                    placeholder="e.g. Step 1..."
+                  />
+                  <label htmlFor="Calories" className="login-label">
+                    Calories
+                  </label>
+                  <input
+                    className="login_input-field"
+                    id="Calories"
+                    type="number"
+                    placeholder="e.g. 570"
+                    required
+                    name="Calories"
+                    value={editRecipeCalories}
+                    onChange={(e) => setEditRecipeCalories(e.target.value)}
+                  />
+                  <br />
+                  <button
+                    type="submit"
+                    className="login_button d-flex justify-content-center mt-3"
+                    value="submit"
+                    data-bs-dismiss="modal"
+                    onClick={onSubmitEditRecipe}
                   >
                     Submit
                   </button>

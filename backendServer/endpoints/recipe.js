@@ -17,6 +17,7 @@ router.get('/user-recipes', (req, res) => {
   });
 });
 
+// add recipe
 router.post('/add-recipe', (req, res) => {
   console.log('Called user add recipe endpoint');
   // Generate SQL query with user info
@@ -51,6 +52,30 @@ router.post('/add-recipe', (req, res) => {
       res.send(result1);
     });
     // res.send(result);
+  });
+});
+
+// edit user recipe
+router.post('/edit-recipe', (req, res) => {
+  console.log('Called edit-recipe endpoint');
+  // Generate SQL query
+  let query =
+    `UPDATE recipe SET name = "` +
+    req.query.editRecipeName +
+    `", description = "` +
+    req.query.editRecipeDescription +
+    `", instructions = "` +
+    req.query.editRecipeInstructions +
+    `", calories = ` +
+    req.query.editRecipeCalories +
+    ` WHERE rid = ` +
+    req.query.editRecipeID;
+
+  console.log(query);
+  // Send edit menu item query to db
+  database.query(query, (err, result) => {
+    console.log('Edited recipe on db');
+    res.send(result);
   });
 });
 
