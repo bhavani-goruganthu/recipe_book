@@ -19,6 +19,7 @@ const Recipes = () => {
   const [recipeInstructions, setRecipeInstructions] = useState('');
   const [recipeCalories, setRecipeCalories] = useState(0);
   const [recipeImageURL, setRecipeImageURL] = useState('');
+  const [loadData, setLoadData] = useState(false);
 
   const onClickAddModal = (event) => {
     setRecipeName('');
@@ -44,6 +45,7 @@ const Recipes = () => {
         navigate('/recipes');
         console.log(response.data);
         onClickAddModal();
+        setLoadData(true);
       });
   };
 
@@ -61,6 +63,7 @@ const Recipes = () => {
       })
       .then((res) => {
         console.log(res.data);
+        setLoadData(true);
       });
   };
 
@@ -74,11 +77,11 @@ const Recipes = () => {
           },
         })
         .then((response) => {
-          // console.log(response.data);
           setUserRecipes(response.data);
+          setLoadData(false);
         });
     }
-  }, [appUser]);
+  }, [loadData, appUser]);
 
   return (
     <div className="container mt-4">
